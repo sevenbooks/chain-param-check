@@ -1,9 +1,8 @@
 package com.codertao.design.chain.case1;
 
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Data;
-
-import java.math.BigDecimal;
 
 /**
  * 商品对象
