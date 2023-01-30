@@ -1,13 +1,9 @@
 package com.codertao.design.chain.case1.handler;
 
-import com.codertao.design.chain.case1.ProductCheckHandlerConfig;
 import com.codertao.design.chain.case1.ProductVO;
 import com.codertao.design.chain.case1.Result;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -17,33 +13,32 @@ import java.util.Objects;
 public abstract class AbstractCheckHandler {
 
     /**
-     * 当前处理器持有下一个处理器的引用
-     */
-    @Getter
-    @Setter
-    private AbstractCheckHandler nextHandler;
-
-
-    /**
      * 处理器执行方法
+     *
      * @param param
      * @return
      */
     public abstract Result handle(ProductVO param);
 
+
     /**
-     * 处理器配置
+     * 下一个处理器
+     *
+     * @return
      */
-    @Setter
-    @Getter
-    protected ProductCheckHandlerConfig config;
+    private AbstractCheckHandler getNextHandler() {
+        return CheckHandlerConfig.getNextHandler(this);
+    }
+
 
     /**
      * 链路传递
+     *
      * @param param
      * @return
      */
     protected Result next(ProductVO param) {
+        AbstractCheckHandler nextHandler = getNextHandler();
         //下一个链路没有处理器了，直接返回
         if (Objects.isNull(nextHandler)) {
             return Result.success();

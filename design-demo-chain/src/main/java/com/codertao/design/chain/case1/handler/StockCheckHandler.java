@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component;
  * 库存校验处理器
  */
 @Component
-public class StockCheckHandler extends AbstractCheckHandler{
+public class StockCheckHandler extends AbstractCheckHandler {
+
     @Override
     public Result handle(ProductVO param) {
         System.out.println("库存校验 Handler 开始...");
@@ -24,6 +25,8 @@ public class StockCheckHandler extends AbstractCheckHandler{
         System.out.println("库存校验 Handler 通过...");
 
         //执行下一个处理器
-        return super.next(param);
+        return super.next( param);
     }
+
+
 }
