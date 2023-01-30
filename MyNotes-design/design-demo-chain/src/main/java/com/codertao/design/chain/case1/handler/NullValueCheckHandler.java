@@ -4,18 +4,25 @@ package com.codertao.design.chain.case1.handler;
 import com.codertao.design.chain.case1.ErrorCode;
 import com.codertao.design.chain.case1.ProductVO;
 import com.codertao.design.chain.case1.Result;
-import java.util.Objects;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * 空值校验处理器
  */
 @Component
-public class NullValueCheckHandler extends AbstractCheckHandler {
+public class NullValueCheckHandler extends AbstractCheckHandler{
 
     @Override
     public Result handle(ProductVO param) {
         System.out.println("空值校验 Handler 开始...");
+
+        //降级：如果配置了降级，则跳过此处理器，执行下一个处理器
+        if (super.getConfig().getDown()) {
+            System.out.println("空值校验 Handler 已降级，跳过空值校验 Handler...");
+            return super.next(param);
+        }
 
         //参数必填校验
         if (Objects.isNull(param)) {
@@ -39,5 +46,4 @@ public class NullValueCheckHandler extends AbstractCheckHandler {
         //执行下一个处理器
         return super.next(param);
     }
-
 }
